@@ -21,7 +21,8 @@ module NewRelic
         end
 
         def request_path
-          env['api.endpoint'].routes.first.route_path[1..-1].gsub("/", "-").sub(/\(\.:format\)\z/, "")
+          route = env['api.endpoint'].routes.first
+          [route.route_version, "#{route.route_path[1..-1].sub(/\(\.:format\)\z/, '')}"].join('/')
         end
 
         def request_method
